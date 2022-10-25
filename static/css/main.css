@@ -1,0 +1,12 @@
+body {
+    margin:0;
+    color: #333;
+    font-family: verdana;
+    font-size: 20px;
+    background-color: rgb(201, 76, 76);
+}
+.styled {
+    background-color: #92a8d1;
+    font-family: verdana;
+    font-size: 20px;
+}
