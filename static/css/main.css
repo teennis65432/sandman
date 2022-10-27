@@ -1,12 +1,29 @@
-body {
-    margin:0;
-    color: #333;
-    font-family: verdana;
-    font-size: 20px;
-    background-color: rgb(201, 76, 76);
+input[type=button] {
+  background-color: green;
 }
-.styled {
-    background-color: #92a8d1;
-    font-family: verdana;
-    font-size: 20px;
+
+#logo {
+  position: relative;
+  left:20%;
+}
+
+#logotext {
+  font-family: comic sans ms;
+  font-weight: bold;
+  color: green;
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: black;
+  font-size: 44px;
+  position: absolute;
+  top: 25%;
+  left: 5%;
+}
+
+#logindiv{
+  position: fixed;
+  left:30%;
+}
+
+* {
+  font-family: verdana;
 }
