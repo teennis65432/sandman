@@ -26,13 +26,11 @@ def generateCal(weekday, daysInMonth):
         day += 1
         weekday += 1
         if weekday == 7:
-            week = ['' if i is None else i for i in week]
             month.append(week)
-            week = [None] * 7
+            week = [''] * 7
             weekday = 0
 
-    if any(week) is not None:   
-        week = ['' if i is None else i for i in week]
+    if any(week) is not '':   
         month.append(week)
 
     return month
