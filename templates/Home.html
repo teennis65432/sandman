@@ -7,19 +7,20 @@
 </head>
 <body>
   <div id="header">
-    <button id="clockin">Clock in</button>
+    <button id="clockin">Clock in/Clock out</button>
     <button id="reqtimeoff">Request Time off</button>
     <button id="checkhours">Check hours</button>
+    <button id="manager"> Employer Tools </button>
     <button id="signout">Sign Out</button>
   </div>
   
   <!--Month/year top of calendar--> 
-  <h1 align="center" style="color: black;">
+  <h1 id="monthtitle" align="center">
    {{ month.month }} {{ month.year }}
   </h1>
   <br />
   
-<table bgcolor="#baffbc" align="center" 
+<table id="calendar" bgcolor="#fbff84" align="center" 
         cellspacing="0" cellpadding="30">
   
   <caption align="top">
@@ -27,7 +28,7 @@
     </caption>
   
   <thead>
-     <tr bgcolor="#50ad53">
+     <tr bgcolor="#fa9020">
          <th>Sun</th>
                 <th>Mon</th>
                 <th>Tue</th>

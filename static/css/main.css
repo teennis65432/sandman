@@ -1,29 +1,67 @@
 input[type=button] {
-  background-color: green;
+  background-color: magenta;
+  border-radius: 25px;
+}
+
+input{
+  border-radius: 25px;
+  padding: 8px;
+}
+
+button{
+  background-color: magenta;
+  border-radius: 25px;
+  padding: 4px 8px;
 }
 
 #logo {
   position: relative;
-  left:20%;
+  margin: auto;
+  width: 60%;
 }
 
 #logotext {
-  font-family: comic sans ms;
   font-weight: bold;
-  color: green;
-  -webkit-text-stroke-width: 3px;
+  color: magenta;
+  -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: black;
   font-size: 44px;
   position: absolute;
-  top: 25%;
-  left: 5%;
+  left: 170px;
 }
 
-#logindiv{
+#logindiv {
   position: fixed;
-  left:30%;
+  display: inline-block;
+  text-align: center;
+  left:40%;
+}
+
+#calendar{
+  border: solid;
+  border-radius: 25px;
+}
+
+#monthtitle {
+  font-weight: bold;
+  color: magenta;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
+  font-size: 44px;
+}
+
+table th:first-child{
+  border-radius: 25px 0 0 0px;
+}
+
+table th:last-child{
+  border-radius:0 25px 0px 0;
+}
+
+body {
+  background-color: #00bbe0;
 }
 
 * {
-  font-family: verdana;
+  font-family: comic sans ms;
 }
