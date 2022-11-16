@@ -12,14 +12,17 @@
     
   </div>
   <div id="logindiv">
-    <form id="loginform">
+    <form action="" method="post">
       <p>Username</p>
-      <input type="text" value="Username">
+      <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
       <p>Password</p>
-      <input type="text" value="Password">
+      <input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
       <p></p>
-    	<input type="button" onclick="location.href = '/home';" value="Employee Login">
+    	<input class="btn btn-default" type="submit" value="Login">
     </form>
+    {% if error %}
+      <p class="error"><strong>Error:</strong> {{ error }}
+    {% endif %}
   </div>
 </body>  
 </html>
