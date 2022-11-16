@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
-import calendarHelper
-import tables
-import login
+import src.calendarHelper as calendarHelper
+import src.tables as tables
+import src.login as login
 
 app = Flask(__name__)
 
