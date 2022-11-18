@@ -1,24 +1,50 @@
-# Database functions will go here
-import os
-from flask import Flask, render_template, request, flash, redirect
-import psycopg2
+from webapp import app, db
+from src.models import User
 
+def createTables():
+    with app.app_context():
+        db.create_all()
 
-def get_db_connection():
-        conn = psycopg2.connect("dbname=sandman user=postgres password=password")
-        return conn
+def getTables():
+    with app.app_context():
+        return db.engine.table_names()
 
+def getColumns(table):
+    with app.app_context():
+        if not db.engine.has_table(table):
+                return 'table ' + table + ' does not exist'
+        conn = db.engine.connect()
+        return conn.execute('SELECT * FROM ' + table).keys()
 
-def reset_tables():
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute("DROP TABLE IF EXISTS employee")       
-        cur.execute("CREATE TABLE IF NOT EXISTS employee (id integer PRIMARY KEY NOT NULL, pass varchar, manager integer, name varchar, pay integer, hours integer)")
-        cur.execute("INSERT INTO employee (id, pass, manager, name, pay, hours) VALUES (%s, %s, %s, %s, %s, %s)",(1234, 'John1234', 1, 'Johnathon Dillbury', 24, 60))
-        cur.execute("INSERT INTO employee (id, pass, manager, name, pay, hours) VALUES (%s, %s, %s, %s, %s, %s)",(4321, 'Fred4321', 0, 'Fred Mackentire', 8, 40))
+def addUser(name, password, manager):
+        newUser = User(name=name, password=password, manager=manager)
+        with app.app_context():
+                db.session.add(newUser)
+                db.session.commit()
+
+def getAllUsers():
+        with app.app_context():
+                users = User.query.all()
+
+                for user in users:
+                        print(user)
+                        print(user.name)
+
+def getUser(id):
+        with app.app_context():
+                employee = User.query.filter_by(id=id).first()
+                return employee
+                
+        return None
+
+def checkLogin(user, password):
+        with app.app_context():
+                employee = User.query.filter_by(name=user).first()
+                if (employee is not None):
+                        print(employee)
+                        print(employee.password)
+                        if(employee.password == password):
+                                return True
+                
+        return False
         
-        conn.commit()
-        cur.close()
-        conn.close()
-        return
-
