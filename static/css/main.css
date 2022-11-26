@@ -1,4 +1,4 @@
-input[type=button] {
+input[type=submit] {
   background-color: magenta;
   border-radius: 25px;
 }
@@ -12,6 +12,18 @@ button{
   background-color: magenta;
   border-radius: 25px;
   padding: 4px 8px;
+}
+
+#user {
+  font-weight: bold;
+  font-size: 20px;
+  color: magenta;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  position: absolute; 
+  top: 0; 
+  right: 0;
+  padding: 0px 12px;
 }
 
 #logo {

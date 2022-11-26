@@ -8,19 +8,15 @@
 <body>
   <div id="header">
     <button onclick="location.href = '/home';" id="home">Home</button>
-    <button id="clockin">Clock in/Clock out</button>
-    <button id="reqtimeoff">Request Time off</button>
-    <button id="checkhours">Check hours</button>
+    <button onclick="location.href = '/remove-employee';" id="remove-employee"> Fire Employee </button>
+    <button onclick="location.href = '/add-employee';" id="add-employee"> Add Employee </button>
     <button onclick="location.href = '/all-employees';" id="manager"> Employer Tools </button>
     <button onclick="location.href = '/logout';" id="signout">Sign Out</button>
-    <p id="user">
-      Hello {{ user.name }}
-    </p>
   </div>
   
   <!--Month/year top of calendar--> 
   <h1 id="monthtitle" align="center">
-   {{ month.month }} {{ month.year }}
+   Click the Employee to Fire
   </h1>
   <br />
   
@@ -33,22 +29,18 @@
   
   <thead>
      <tr bgcolor="#fa9020">
-         <th>Sun</th>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Manager</th>
      </tr>
 	</thead>
         <tbody>
-          {% for week in month.cal %}
-            <tr>
-              {% for day in week %}
-                <td> {{day}} </td>
-              {% endfor %}
-       			</tr>
+          {% for user in users %}
+            <tr onclick="location.href = '/remove/' + {{ user.id }};">
+                    <td> {{user.id}} </td>
+                    <td> {{user.name}} </td>
+                    <td> {{user.manager}} </td>
+       		</tr>
           {% endfor %}
         </tbody>
     </table>
