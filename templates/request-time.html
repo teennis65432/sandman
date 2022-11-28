@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <title> Sandman </title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div id="header">
+        <button onclick="location.href = '/home';" id="home">Home</button>
+        <button onclick="location.href = '/remove-employee';" id="remove-employee"> Fire Employee </button>
+        <button onclick="location.href = '/add-employee';" id="add-employee"> Add Employee </button>
+        <button onclick="location.href = '/all-employees';" id="manager"> Employer Tools </button>
+        <button onclick="location.href = '/logout';" id="signout">Sign Out</button>
+      </div>
+
+  <div id="logindiv">
+    <form action="" method="post">
+      <p>Request Time Off Start</p>
+      <input type="date" placeholder="Request Time Off Start" name="start" value="{{ request.form.username }}">
+      <p>Request Time Off End</p>
+      <input type="date" placeholder="RTOE" name="end" value="{{ request.form.password }}">
+      <p></p>
+    	<input class="btn btn-default" type="submit" value="Submit">
+    </form>
+  </div>
+</body>  
+</html>
+
