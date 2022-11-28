@@ -70,6 +70,32 @@ table th:last-child{
   border-radius:0 25px 0px 0;
 }
 
+.hovertext{
+  position: relative;
+}
+
+.hovertext::before {
+  content: attr(data-hover);
+  opacity: 0;
+  width: 300px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 5px;
+  transition: opacity 1s ease-in-out;
+  
+  position:absolute;
+  z-index: 1;
+  left: 0%;
+  top: 110%;
+}
+
+.hovertext:hover::before{
+  opacity: 1;
+  visibility: visibile;
+}
+
 body {
   background-color: #00bbe0;
 }
