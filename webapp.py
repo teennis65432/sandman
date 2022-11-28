@@ -48,6 +48,11 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.route("/request-time")
+@login_required
+def request_time():
+    return render_template("request-time.html")
+
 @app.route('/add-employee', methods=['GET', 'POST'])
 @login_required
 def addEmployee():
