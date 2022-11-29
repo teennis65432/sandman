@@ -20,15 +20,15 @@ def getColumns(table):
         return conn.execute("SELECT * FROM " + table).keys()
 
 
-def addUser(name, password, manager):
-    newUser = User(name=name, password=password, manager=manager)
+def addUser(user_id, name, password, manager):
+    newUser = User(user_id=user_id, name=name, password=password, manager=manager)
     with app.app_context():
         db.session.add(newUser)
         db.session.commit()
 
 
 def removeUser(id):
-        user = getUser(id)
+        user = getUserByID(id)
         with app.app_context():
                 db.session.delete(user)
                 db.session.commit()
@@ -39,10 +39,16 @@ def getAllUsers():
         users = User.query.all()
         return users
 
-
-def getUser(id):
+def getUserByID(id):
     with app.app_context():
         employee = User.query.filter_by(id=id).first()
+        return employee
+
+    return None
+
+def getUser(user_id):
+    with app.app_context():
+        employee = User.query.filter_by(user_id=user_id).first()
         return employee
 
     return None
@@ -50,7 +56,8 @@ def getUser(id):
 
 def checkLogin(user, password):
     with app.app_context():
-        employee = User.query.filter_by(name=user).first()
+        employee = User.query.filter_by(user_id=user).first()
+        print(employee)
         if employee is not None:
             if employee.password == password:
                 return employee
