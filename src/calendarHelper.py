@@ -1,5 +1,6 @@
 import calendar
 import datetime
+from dateutil import relativedelta
 
 #gets the current month, year, and calendar of the month
 def getCurMonth():
@@ -9,9 +10,21 @@ def getCurMonth():
     cal = generateCal(weekday, daysinMonth)
     year = datetime.date.today().year
     month = datetime.datetime.now().strftime('%B')
-    #print(month)
 
-    return {'month': month, 'year': year, 'cal': cal}
+    return {'month': month, 'year': year, 'cal': cal, 'next': False}
+
+def getNextMonth():
+    today = datetime.date.today()
+    nextMonthDate = today + relativedelta.relativedelta(months=1, day=1)
+
+    weekday = nextMonthDate.weekday()
+    daysinMonth = calendar.monthrange(nextMonthDate.year, nextMonthDate.month)[1]
+
+    cal = generateCal(weekday, daysinMonth)
+    year = nextMonthDate.year
+    month = nextMonthDate.strftime('%B')
+
+    return {'month': month, 'year': year, 'cal': cal, 'next': True}
 
 #generates the calendar in a format that is readable by the html
 def generateCal(weekday, daysInMonth):
@@ -31,7 +44,7 @@ def generateCal(weekday, daysInMonth):
             week = [''] * 7
             weekday = 0
 
-    if any(week) is not '':   
+    if week[0] != '':   
         month.append(week)
 
     return month

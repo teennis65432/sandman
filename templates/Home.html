@@ -18,12 +18,26 @@
     </p>
   </div>
   
+  {% if error %}
+    <p class="error"><strong>Error:</strong> {{ error }} </p>
+  {% endif %}
+
   <!--Month/year top of calendar--> 
   <h1 id="monthtitle" align="center">
    {{ month.month }} {{ month.year }}
   </h1>
   <br />
   
+
+  <form action="" method="post">
+    {% if month.next %}
+      <input class="btn btn-default" type="submit" name="back" id="back" value=" &laquo; "/>
+    {% endif %}
+    {% if not month.next %}
+    <input class="btn btn-default" type="submit" name="next" id="next" value=" &raquo; "/>
+    {% endif %}
+  </form>
+
 <table id="calendar" bgcolor="#fbff84" align="center" 
         cellspacing="0" cellpadding="30">
   
@@ -52,7 +66,6 @@
           {% endfor %}
         </tbody>
     </table>
-  
   
       
 </body> 

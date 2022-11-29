@@ -3,6 +3,19 @@ input[type=submit] {
   border-radius: 25px;
 }
 
+#back {
+  position: absolute;
+  margin: auto;
+  left: 535px;
+  top: 135px;
+}
+#next {
+  position: absolute;
+  margin: auto;
+  right: 535px;
+  top: 135px;
+}
+
 input{
   border-radius: 25px;
   padding: 8px;
@@ -26,10 +39,16 @@ button{
   padding: 0px 12px;
 }
 
+.error {
+  font-size: 20px;
+  color: red;
+  text-align: center;
+}
+
 #logo {
   position: relative;
   margin: auto;
-  width: 60%;
+  width: 30%;
 }
 
 #logotext {
@@ -43,10 +62,8 @@ button{
 }
 
 #logindiv {
-  position: fixed;
-  display: inline-block;
   text-align: center;
-  left:40%;
+  font-size: 20px;
 }
 
 #calendar{

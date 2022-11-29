@@ -29,7 +29,7 @@
   
   <thead>
      <tr bgcolor="#fa9020">
-        <th>ID</th>
+        <th>Username</th>
         <th>Name</th>
         <th>Manager</th>
      </tr>
@@ -37,7 +37,7 @@
         <tbody>
           {% for user in users %}
             <tr>
-                <td> {{user.id}} </td>
+                <td> {{user.user_id}} </td>
                 <td> {{user.name}} </td>
                 <td> {{user.manager}} </td>
        		</tr>
