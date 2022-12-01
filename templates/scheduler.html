@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <title> Sandman </title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div id="header">
+        <button onclick="location.href = '/home';" id="home">Home</button>
+        <button onclick="location.href = '/all-employees';" id="manager"> Employer Tools </button>
+        <button onclick="location.href = '/logout';" id="signout">Sign Out</button>
+      </div>
+  
+  <div id="weeklyview">
+    <table id="days">
+      <tr>
+        <th>Sun</th>
+        <th>Mon</th>
+        <th>Tues</th>
+        <th>Wed</th>
+        <th>Thur</th>
+        <th>Fri</th>
+        <th>Sat</th>
+      </tr>
+      <tr>
+        <!--Placeholder for shift hours variable-->
+        <td>Hours</td>
+        <td>Hours</td>
+        <td>Hours</td>
+        <td>Hours</td>
+        <td>Hours</td>
+        <td>Hours</td>
+        <td>Hours</td>
+    </table>
+    
+    <select id="employees">
+      <!-- placeholder for now, loop through each employee-->
+      <option value="employee_id">Employee</option>
+    </select>
+    
+    <input id="starttime" type="datetime-local">
+    <input id="endtime" type="datetime-local">
+    <button id="submittime">submit</button>
+  </div>
+</body>
+</html>

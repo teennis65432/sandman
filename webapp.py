@@ -70,6 +70,11 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.route("/request-time")
+@login_required
+def request_time():
+    return render_template("request-time.html")
+
 @app.route('/add-employee', methods=['GET', 'POST'])
 @login_required
 def addEmployee():
@@ -90,6 +95,12 @@ def allEmployees():
         return redirect(url_for('homeError', errorcode=401))
     return render_template('all-employees.html', users=tables.getAllUsers())
 
+@app.route('/scheduler')
+@login_required
+def scheduler():
+    if not current_user.manager:
+        return redirect(url_for('home'))
+    return render_template('scheduler.html', users=tables.getAllUsers())
 
 @app.route('/remove-employee')
 @login_required

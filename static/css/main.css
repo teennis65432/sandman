@@ -27,6 +27,52 @@ button{
   padding: 4px 8px;
 }
 
+select {
+  background-color: magenta;
+  border-radius: 25px;
+  padding: 4px 8px;
+  outline-color: black;
+  outline-style: solid;
+  outline-width: 2px;
+}
+
+#days{
+  position: fixed;
+  left: 25%;
+  top: 20%;
+}
+
+#days td{
+  padding: 120px 30px;
+  border-radius: 25px;
+  border: solid;
+  background-color: #fbff84;
+}
+
+#employees{
+  position: fixed;
+  left: 20%;
+  top: 75%;
+}
+
+#starttime{
+  position: fixed;
+  left: 38%;
+  top: 75%;
+}
+
+#endtime{
+  position: fixed;
+  left: 70%;
+  top: 75%;
+}
+
+#submittime{
+  position: fixed;
+  left: 45%;
+  top: 85%;
+}
+
 #user {
   font-weight: bold;
   font-size: 20px;
@@ -85,6 +131,32 @@ table th:first-child{
 
 table th:last-child{
   border-radius:0 25px 0px 0;
+}
+
+.hovertext{
+  position: relative;
+}
+
+.hovertext::before {
+  content: attr(data-hover);
+  opacity: 0;
+  width: 300px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 5px;
+  transition: opacity 1s ease-in-out;
+  
+  position:absolute;
+  z-index: 1;
+  left: 0%;
+  top: 110%;
+}
+
+.hovertext:hover::before{
+  opacity: 1;
+  visibility: visibile;
 }
 
 body {

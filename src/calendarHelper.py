@@ -48,10 +48,3 @@ def generateCal(weekday, daysInMonth):
         month.append(week)
 
     return month
-
-#picks which emoji is shown on the header on the home.html
-#def chooseEmoji(month):
- #   emoji = ""
-  #  match month:
-   #     case "January":
-    #        emoji =
