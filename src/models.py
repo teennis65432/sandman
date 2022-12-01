@@ -17,7 +17,10 @@ class Shift(db.Model):
     __tablename__ = "shifts"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    time = db.Column(db.Integer)
+    start = db.Column(db.DateTime, nullable=False)
+    end = db.Column(db.DateTime, nullable=False)
+    clockin = db.Column(db.DateTime)
+    clockout = db.Column(db.DateTime)
 
     def __repr__(self):
-        return '<Shift %r>' % self.time
+        return '<Shift %r>' % self.start

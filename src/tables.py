@@ -1,5 +1,7 @@
 from webapp import app, db
 from src.models import User
+from src.models import Shift
+from sqlalchemy import asc
 
 
 def createTables():
@@ -63,3 +65,15 @@ def checkLogin(user, password):
                 return employee
 
     return None
+
+
+def addShift(user_id, start, end):
+    newShift = Shift(user_id=user_id, start=start, end=end)
+    with app.app_context():
+        db.session.add(newShift)
+        db.session.commit()
+
+def getAllShifts():
+    with app.app_context():
+        shifts = Shift.query.order_by(asc(Shift.start)).all()
+        return shifts

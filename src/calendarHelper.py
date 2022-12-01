@@ -1,5 +1,6 @@
 import calendar
 import datetime
+from datetime import date
 from dateutil import relativedelta
 
 #gets the current month, year, and calendar of the month
@@ -26,6 +27,62 @@ def getNextMonth():
 
     return {'month': month, 'year': year, 'cal': cal, 'next': True}
 
+def getCurWeek():
+    today = datetime.date.today()
+    week = []
+    d = today.toordinal()
+    sunday = d - (d % 7)
+    saturday = sunday + 6
+    year = date.fromordinal(sunday).year
+    month = date.fromordinal(sunday).strftime('%B')
+    for i in range(7):
+        week.append(date.fromordinal(sunday+i).day)
+
+    return {'month': month, 'year': year, 'week': week, 'min': date.fromordinal(sunday).strftime("%Y-%m-%dT%H:%M:%S"), 'max': date.fromordinal(saturday).strftime("%Y-%m-%dT%H:%M:%S")}
+
+def getCurWeekFromDay(day):
+    week = []
+    d = day.toordinal()
+    sunday = d - (d % 7)
+    saturday = sunday + 6
+    year = date.fromordinal(sunday).year
+    month = date.fromordinal(sunday).strftime('%B')
+    for i in range(7):
+        week.append(date.fromordinal(sunday+i).day)
+
+    return {'month': month, 'year': year, 'week': week, 'min': date.fromordinal(sunday).strftime("%Y-%m-%dT%H:%M:%S"), 'max': date.fromordinal(saturday).strftime("%Y-%m-%dT%H:%M:%S")}
+
+def getLastWeek(day):
+    week = []
+    d = day.toordinal()
+    saturday = d-1
+    sunday = saturday - 6
+    print(sunday)
+    print(date.fromordinal(sunday))
+    print(saturday)
+    print(date.fromordinal(saturday))
+    year = date.fromordinal(sunday).year
+    month = date.fromordinal(sunday).strftime('%B')
+    for i in range(7):
+        week.append(date.fromordinal(sunday+i).day)
+
+    return {'month': month, 'year': year, 'week': week, 'min': date.fromordinal(sunday).strftime("%Y-%m-%dT%H:%M:%S"), 'max': date.fromordinal(saturday).strftime("%Y-%m-%dT%H:%M:%S")}
+
+def getNextWeek(day):
+    week = []
+    d = day.toordinal()
+    sunday = d+1
+    saturday = sunday + 6
+    print(sunday)
+    print(saturday)
+    year = date.fromordinal(sunday).year
+    month = date.fromordinal(sunday).strftime('%B')
+    for i in range(7):
+        week.append(date.fromordinal(sunday+i).day)
+
+    return {'month': month, 'year': year, 'week': week, 'min': date.fromordinal(sunday).strftime("%Y-%m-%dT%H:%M:%S"), 'max': date.fromordinal(saturday).strftime("%Y-%m-%dT%H:%M:%S")}
+
+
 #generates the calendar in a format that is readable by the html
 def generateCal(weekday, daysInMonth):
     weekday += 1
@@ -48,3 +105,10 @@ def generateCal(weekday, daysInMonth):
         month.append(week)
 
     return month
+
+#picks which emoji is shown on the header on the home.html
+#def chooseEmoji(month):
+ #   emoji = ""
+  #  match month:
+   #     case "January":
+    #        emoji =

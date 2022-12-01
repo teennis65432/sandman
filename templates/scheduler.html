@@ -13,36 +13,61 @@
         <button onclick="location.href = '/logout';" id="signout">Sign Out</button>
       </div>
   
+  {% if error %}
+    <p class="error"><strong>Error:</strong> {{ error }} </p>
+  {% endif %}
+
+  <!--Month/year top of calendar--> 
+  <h1 id="monthtitle" align="center">
+    {{ week.month }} {{ week.year }}
+  </h1>
+
+  <form action="" method="post">
+    <input class="" name="min" value={{ week.min }} hidden/>
+    <input class="" name="max" value={{ week.max }} hidden/>
+    <input class="btn btn-default" type="submit" name="lastweek" id="lastweek" value=" &laquo; "/>
+    <input class="btn btn-default" type="submit" name="nextweek" id="nextweek" value=" &raquo; "/>
+  </form>
+
   <div id="weeklyview">
     <table id="days">
       <tr>
-        <th>Sun</th>
-        <th>Mon</th>
-        <th>Tues</th>
-        <th>Wed</th>
-        <th>Thur</th>
-        <th>Fri</th>
-        <th>Sat</th>
+        <th>Sun {{ week.week[0] }}</th>
+        <th>Mon {{ week.week[1] }}</th>
+        <th>Tues {{ week.week[2] }}</th>
+        <th>Wed {{ week.week[3] }}</th>
+        <th>Thur {{ week.week[4] }}</th>
+        <th>Fri {{ week.week[5] }}</th>
+        <th>Sat {{ week.week[6] }}</th>
       </tr>
       <tr>
         <!--Placeholder for shift hours variable-->
-        <td>Hours</td>
-        <td>Hours</td>
-        <td>Hours</td>
-        <td>Hours</td>
-        <td>Hours</td>
-        <td>Hours</td>
-        <td>Hours</td>
+        {% for i in range(7) %}
+          <td>
+            <table id="shifts">
+              {% for shift in shifts[i] %}
+                <tr>
+                  <td>{{ shift.user_id }}</td>
+                  <td>{{ shift.start }}</td>
+                  <td>{{ shift.end }}</td>
+                </tr>
+              {% endfor %}
+            </table>
+          </td>
+        {% endfor %}
+      </tr>
     </table>
-    
-    <select id="employees">
-      <!-- placeholder for now, loop through each employee-->
-      <option value="employee_id">Employee</option>
-    </select>
-    
-    <input id="starttime" type="datetime-local">
-    <input id="endtime" type="datetime-local">
-    <button id="submittime">submit</button>
   </div>
+    
+  <form action="" method="post">
+    <select id="user_id" name="user_id" required>
+      {% for user in users %}
+        <option value={{ user.id }}> {{ user.name }}</option>
+      {% endfor %}
+    </select>
+    <input id="start" required name="start" type="datetime-local" min={{ week.min }} max={{ week.max }}></input>
+    <input id="end" required name="end" type="datetime-local" min={{ week.min }} max={{ week.max }}></input>
+    <button id="submit" type="submit">Submit</button>
+  </form>
 </body>
 </html>
