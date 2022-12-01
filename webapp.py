@@ -22,10 +22,12 @@ def load_user(id):
 
 @app.route('/')
 def start():
-    if current_user == None:
-        return redirect(url_for('login'))
-    else:
+    try:
+        current_user.id
         return redirect(url_for('home'))
+    except:
+        return redirect(url_for('login'))
+        
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -59,6 +61,8 @@ def homeError(errorcode):
         error = 'You are trying to clock in too early'
     if errorcode == 413:
         error = 'You are trying to clock out too late'
+    if errorcode == 414:
+        error == 'You have no shift to clock in to'
     if request.method == 'POST':
         if "next" in request.form:
             return render_template("Home.html", month=calendarHelper.getNextMonth(), user=current_user)
@@ -101,7 +105,7 @@ def allEmployees():
 @login_required
 def scheduler():
     if not current_user.manager:
-        return redirect(url_for('home'))
+        return redirect(url_for('home', errorcode=401))
 
     if request.method == 'POST':
         if "nextweek" in request.form:
@@ -139,6 +143,27 @@ def remove(id):
 
     tables.removeUser(id)
     return redirect(url_for('removeEmployee'))
+
+@app.route('/clock-in')
+@login_required
+def clockIn():
+    shift = tables.getTodayShift(current_user.id)
+    if shift is None:
+        return redirect(url_for('homeError', errorcode=414))
+    
+    if shiftHelper.validClockIn(shift):
+        tables.clockIn(shift.id)
+    
+    return redirect(url_for('home'))
+
+@app.route('/clock-out')
+@login_required
+def clockOut():  
+    shift = tables.getTodayShift(current_user.id)
+    if shift is None:
+        return redirect(url_for('homeError', errorcode=414))
+    
+    return redirect(url_for('home'))
 
 if __name__ == "__main__":
     calendarHelper.getNextMonth()
