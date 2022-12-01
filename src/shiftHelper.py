@@ -1,4 +1,5 @@
 from datetime import datetime
+from datetime import timedelta
 
 
 def isValid(start, end):
@@ -6,7 +7,6 @@ def isValid(start, end):
         return 'Start time happens after end time'
     
     return 'All Good!'
-
 
 
 def convertToDateTime(string):
@@ -36,4 +36,12 @@ def weekShiftList(shifts, week):
         dayShifts = []
 
     return weekShifts
-        
+
+def validClockIn(shift):
+    day = datetime.now() + timedelta(minutes=15)
+    if (shift.start <= day and shift.end > day):
+        return True
+    else:
+        return False
+
+
