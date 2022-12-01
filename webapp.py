@@ -3,6 +3,8 @@ from flask_login import LoginManager, login_required, login_user, logout_user, c
 from flask_sqlalchemy import SQLAlchemy
 import src.calendarHelper as calendarHelper
 import src.tables as tables
+import src.shiftHelper as shiftHelper
+import datetime
 
 LM = LoginManager()
 db = SQLAlchemy()
@@ -95,12 +97,32 @@ def allEmployees():
         return redirect(url_for('homeError', errorcode=401))
     return render_template('all-employees.html', users=tables.getAllUsers())
 
-@app.route('/scheduler')
+@app.route('/scheduler', methods=['GET', 'POST'])
 @login_required
 def scheduler():
     if not current_user.manager:
         return redirect(url_for('home'))
-    return render_template('scheduler.html', users=tables.getAllUsers())
+
+    if request.method == 'POST':
+        if "nextweek" in request.form:
+            week = calendarHelper.getNextWeek(shiftHelper.convertToDateTime(request.form['max']))
+            return render_template('scheduler.html', users=tables.getAllUsers(), week=week, shifts=shiftHelper.weekShiftList(tables.getAllShifts(), week['week']))
+        elif "lastweek" in request.form:
+            week = calendarHelper.getLastWeek(shiftHelper.convertToDateTime(request.form['min']))
+            return render_template('scheduler.html', users=tables.getAllUsers(), week=week, shifts=shiftHelper.weekShiftList(tables.getAllShifts(), week['week']))
+        else: #create shift
+            start = shiftHelper.convertToDateTime(request.form['start'])
+            end = shiftHelper.convertToDateTime(request.form['end'])
+            message = shiftHelper.isValid(start, end)
+            week = calendarHelper.getCurWeekFromDay(shiftHelper.convertToDateTime(request.form['start']))
+            if message != 'All Good!':
+                return render_template('scheduler.html', users=tables.getAllUsers(), week=week, shifts=shiftHelper.weekShiftList(tables.getAllShifts(), week['week']), error=message)
+            
+            tables.addShift(request.form['user_id'], start, end)
+            return render_template('scheduler.html', users=tables.getAllUsers(), week=week, shifts=shiftHelper.weekShiftList(tables.getAllShifts(), week['week']))
+    
+    week = calendarHelper.getCurWeek()
+    return render_template('scheduler.html', users=tables.getAllUsers(), week=week, shifts=shiftHelper.weekShiftList(tables.getAllShifts(), week['week']))
 
 @app.route('/remove-employee')
 @login_required
