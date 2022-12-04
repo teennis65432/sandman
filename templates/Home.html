@@ -61,12 +61,14 @@
           {% for week in month.cal %}
             <tr>
               {% for day in week %}
-                <td class="hovertext" data-hover="Hours Variable Placeholder"> {{day}} </td>
+                {% if shifts[day] == '' %}
+                  <td> {{day}} </td>
+                {% else %}
+                  <td style="color:red; font-weight: bold;" class="hovertext" data-hover={{ shifts[day] }}> {{day}} </td>
+                {% endif %}
               {% endfor %}
        			</tr>
           {% endfor %}
         </tbody>
     </table>
-  
-      
 </body> 

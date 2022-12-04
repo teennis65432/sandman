@@ -1,3 +1,4 @@
+import calendar
 from datetime import datetime
 from datetime import timedelta
 
@@ -44,4 +45,28 @@ def validClockIn(shift):
     else:
         return False
 
+def canUserClockOut(shift):
+    if shift.start is None:
+        return False
+    
+    if shift.end is not None:
+        return False
+    
+    return True
 
+
+def organizeShifts(shifts, year, month):
+    print(shifts)
+
+    monthShifts = [''] * (calendar.monthrange(year, month)[1] + 1)
+
+    for shift in shifts:
+        print(shift)
+        if shift.start.month == month and shift.start.year == year:
+            shiftText = shift.start.strftime("%H:%M") + "-" + shift.end.strftime("%H:%M")
+            print(shift.start.day)
+            monthShifts[shift.start.day] = shiftText
+        elif shift.start.month > month or shift.start.year > year:
+            break
+
+    return monthShifts
