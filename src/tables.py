@@ -2,7 +2,7 @@ from webapp import app, db
 from src.models import User
 from src.models import Shift
 from sqlalchemy import asc
-from datetime import datetime
+from datetime import datetime, timedelta, date
 
 
 def createTables():
@@ -82,12 +82,25 @@ def getAllShifts():
 def getTodayShift(userid):
     with app.app_context():
         todays_datetime = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
-        shift = Shift.query.filter_by(user_id=userid).filter(Shift.start>=todays_datetime).order_by(asc(Shift.start)).first()
-        return shift
 
+        shift = Shift.query.filter_by(user_id=userid).filter(Shift.start>=todays_datetime).first()
+        return shift
 
 def clockIn(shift_id):
     with app.app_context():
         s = Shift.query.get(shift_id)
         s.clockin = datetime.now()
         db.session.commit()
+
+def clockOut(shift_id):
+    with app.app_context():
+        s = Shift.query.get(shift_id)
+        s.clockout = datetime.now()
+        db.session.commit()
+
+def getUserShifts(userid):
+    with app.app_context():
+        todays_datetime = datetime(datetime.today().year, datetime.today().month, 1)
+
+        shifts = Shift.query.filter_by(user_id=userid).filter(Shift.start>=todays_datetime).order_by(asc(Shift.start)).all()
+        return shifts

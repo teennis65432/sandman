@@ -44,12 +44,19 @@ def login():
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
+    shifts = shiftHelper.organizeShifts(tables.getUserShifts(current_user.id), datetime.datetime.today().year, datetime.datetime.today().month)
+    print(shifts)
     if request.method == 'POST':
         if "next" in request.form:
-            return render_template("Home.html", month=calendarHelper.getNextMonth(), user=current_user)
+            if datetime.datetime.today().month == 12:
+                shifts = shiftHelper.organizeShifts(tables.getUserShifts(current_user.id), datetime.datetime.today().year + 1, 1)
+            else:
+                shifts = shiftHelper.organizeShifts(tables.getUserShifts(current_user.id), datetime.datetime.today().year, datetime.datetime.today().month+1)
+            return render_template("Home.html", month=calendarHelper.getNextMonth(), user=current_user, shifts=shifts)
         else:
-            return render_template("Home.html", month=calendarHelper.getCurMonth(), user=current_user)
-    return render_template("Home.html", month=calendarHelper.getCurMonth(), user=current_user)
+            return render_template("Home.html", month=calendarHelper.getCurMonth(), user=current_user, shifts=shifts)
+
+    return render_template("Home.html", month=calendarHelper.getCurMonth(), user=current_user, shifts=shifts)
 
 @app.route('/home/<int:errorcode>', methods=['GET', 'POST'])
 @login_required
@@ -57,18 +64,23 @@ def homeError(errorcode):
     error = None
     if errorcode == 401:
         error = 'You are not authorized to access this page'
-    if errorcode == 412:
+    elif errorcode == 412:
         error = 'You are trying to clock in too early'
-    if errorcode == 413:
+    elif errorcode == 413:
         error = 'You are trying to clock out too late'
-    if errorcode == 414:
-        error == 'You have no shift to clock in to'
+    elif errorcode == 414:
+        error = 'You have no shift to clock in/clock out to'
+    shifts = shiftHelper.organizeShifts(tables.getUserShifts(current_user.id), datetime.datetime.today().year, datetime.datetime.today().month)
     if request.method == 'POST':
         if "next" in request.form:
-            return render_template("Home.html", month=calendarHelper.getNextMonth(), user=current_user)
+            if datetime.datetime.today().month == 12:
+                shifts = shiftHelper.organizeShifts(tables.getUserShifts(current_user.id), datetime.datetime.today().year + 1, 1)
+            else:
+                shifts = shiftHelper.organizeShifts(tables.getUserShifts(current_user.id), datetime.datetime.today().year, datetime.datetime.today().month+1)
+            return render_template("Home.html", month=calendarHelper.getNextMonth(), user=current_user, shifts=shifts)
         else:
-            return render_template("Home.html", month=calendarHelper.getCurMonth(), user=current_user)
-    return render_template("Home.html", month=calendarHelper.getCurMonth(), user=current_user, error=error)
+            return render_template("Home.html", month=calendarHelper.getCurMonth(), user=current_user, shifts=shifts)
+    return render_template("Home.html", month=calendarHelper.getCurMonth(), user=current_user, shifts=shifts, error=error)
 
 @app.route("/logout")
 @login_required
@@ -76,9 +88,12 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route("/request-time")
+@app.route("/request-time", methods=['GET', 'POST'])
 @login_required
 def request_time():
+    if request.method == 'POST':
+        return redirect(url_for('home'))
+
     return render_template("request-time.html")
 
 @app.route('/add-employee', methods=['GET', 'POST'])
@@ -151,8 +166,11 @@ def clockIn():
     if shift is None:
         return redirect(url_for('homeError', errorcode=414))
     
+    print(shift)
     if shiftHelper.validClockIn(shift):
         tables.clockIn(shift.id)
+    else:
+        return redirect(url_for('homeError', errorcode=414))
     
     return redirect(url_for('home'))
 
@@ -163,6 +181,11 @@ def clockOut():
     if shift is None:
         return redirect(url_for('homeError', errorcode=414))
     
+    if shiftHelper.canUserClockOut(shift):
+        tables.clockOut(shift.id)
+    else:
+        return redirect(url_for('homeError', errorcode=414))
+
     return redirect(url_for('home'))
 
 if __name__ == "__main__":
