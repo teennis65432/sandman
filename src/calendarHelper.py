@@ -27,6 +27,11 @@ def getNextMonth():
 
     return {'month': month, 'year': year, 'cal': cal, 'next': True}
 
+def getMonthAndYear():
+    year = datetime.date.today().year
+    month = datetime.datetime.now().strftime('%B')
+    return {'month': month, 'year': year}
+
 def getCurWeek():
     today = datetime.date.today()
     week = []
@@ -57,10 +62,6 @@ def getLastWeek(day):
     d = day.toordinal()
     saturday = d-1
     sunday = saturday - 6
-    print(sunday)
-    print(date.fromordinal(sunday))
-    print(saturday)
-    print(date.fromordinal(saturday))
     year = date.fromordinal(sunday).year
     month = date.fromordinal(sunday).strftime('%B')
     for i in range(7):
@@ -73,8 +74,6 @@ def getNextWeek(day):
     d = day.toordinal()
     sunday = d+1
     saturday = sunday + 6
-    print(sunday)
-    print(saturday)
     year = date.fromordinal(sunday).year
     month = date.fromordinal(sunday).strftime('%B')
     for i in range(7):

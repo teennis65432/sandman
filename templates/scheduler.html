@@ -8,9 +8,12 @@
 </head>
 <body>
     <div id="header">
-        <button onclick="location.href = '/home';" id="home">Home</button>
-        <button onclick="location.href = '/all-employees';" id="manager"> Employer Tools </button>
-        <button onclick="location.href = '/logout';" id="signout">Sign Out</button>
+      <button onclick="location.href = '/home';" id="home">Home</button>
+      <button onclick="location.href = '/remove-employee';" id="remove-employee"> Fire Employee </button>
+      <button onclick="location.href = '/add-employee';" id="add-employee"> Add Employee </button>
+      <button onclick="location.href = '/all-employees';" id="manager"> Employer Tools </button>
+      <button onclick="location.href = '/scheduler';" id="scheduler"> Create Schedule </button>
+      <button onclick="location.href = '/logout';" id="signout">Sign Out</button>
       </div>
   
   {% if error %}
@@ -41,13 +44,18 @@
         <th>Sat {{ week.week[6] }}</th>
       </tr>
       <tr>
-        <!--Placeholder for shift hours variable-->
         {% for i in range(7) %}
           <td>
             <table id="shifts">
               {% for shift in shifts[i] %}
                 <tr>
-                  <td>{{ shift.user_id }}</td>
+                  <td>
+                    <form action="" method="post">
+                      <input class="" name="min" value={{ week.min }} hidden/>
+                      <input class="" name="shiftID" value={{ shift.id }} hidden/>
+                      <button id="shiftButton" name="input" type="submit" value="">{{ shift.user_id }}</button>
+                    </form>
+                  </td>
                   <td>{{ shift.start }}</td>
                   <td>{{ shift.end }}</td>
                 </tr>

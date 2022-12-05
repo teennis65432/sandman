@@ -33,6 +33,7 @@ def addUser(user_id, name, password, manager):
 def removeUser(id):
         user = getUserByID(id)
         with app.app_context():
+            if user is not None:
                 db.session.delete(user)
                 db.session.commit()
 
@@ -60,7 +61,6 @@ def getUser(user_id):
 def checkLogin(user, password):
     with app.app_context():
         employee = User.query.filter_by(user_id=user).first()
-        print(employee)
         if employee is not None:
             if employee.password == password:
                 return employee
@@ -74,6 +74,20 @@ def addShift(user_id, start, end):
         db.session.add(newShift)
         db.session.commit()
 
+def removeShift(id):
+        shift = getShiftByID(id)
+        with app.app_context():
+            if shift is not None:
+                db.session.delete(shift)
+                db.session.commit()
+
+def getShiftByID(id):
+    with app.app_context():
+        shift = Shift.query.filter_by(id=id).first()
+        return shift
+
+    return None
+
 def getAllShifts():
     with app.app_context():
         shifts = Shift.query.order_by(asc(Shift.start)).all()
@@ -85,6 +99,11 @@ def getTodayShift(userid):
 
         shift = Shift.query.filter_by(user_id=userid).filter(Shift.start>=todays_datetime).first()
         return shift
+
+def getWeekShifts(day):
+    with app.app_context():
+        shifts = Shift.query.filter(Shift.start>=day).order_by(asc(Shift.start)).all()
+        return shifts
 
 def clockIn(shift_id):
     with app.app_context():

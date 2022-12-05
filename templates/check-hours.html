@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sandman</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+  <div id="header">
+    <button onclick="location.href = '/home';" id="home">Home</button>
+    <button onclick="location.href = '/clock-in';" id="home">Clock In</button>
+    <button onclick="location.href = '/clock-out';" id="home">Clock Out</button>
+    <button onclick="location.href = '/request-time';" id="reqtimeoff">Request Time off</button>
+    <button onclick="location.href = '/check-hours';">Check hours</button>
+    <button onclick="location.href = '/all-employees';" id="manager"> Employer Tools </button>
+    <button onclick="location.href = '/logout';" id="signout">Sign Out</button>
+  </div>
+  
+
+  <!--Month/year top of calendar--> 
+  <h1 id="monthtitle" align="center">
+   {{ month.month }} {{ month.year }}
+  </h1>
+  <br />
+
+  <table id="calendar" bgcolor="#fbff84" align="center" 
+  cellspacing="0" cellpadding="30">
+
+<caption align="top">
+
+</caption>
+<thead>
+    <tr bgcolor="#fa9020">
+       <th>Start</th>
+       <th>End</th>
+       <th>Clockin</th>
+       <th>Clockout</th>
+    </tr>
+   </thead>
+  <tbody>
+    {% for shift in shifts %}
+      <tr>
+          <td> {{shift.start}} </td>
+          <td> {{shift.end}} </td>
+          <td> {{shift.clockin}} </td>
+          <td> {{shift.clockout}} </td>
+         </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</body> 
