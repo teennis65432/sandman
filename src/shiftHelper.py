@@ -23,11 +23,12 @@ def weekShiftList(shifts, week):
     weekShifts = [[]] * 7
     dayShifts = []
     shiftIndex = 0
-    for i in range(len(week)):
+    day = convertToDateTime(week['min'])
+    for i in range(7):
         if len(shifts) <= shiftIndex:
             break
         shift = shifts[shiftIndex]
-        while week[i] == shift.start.day:
+        while day.day == shift.start.day and day.month == shift.start.month and day.year == shift.start.year:
             dayShifts.append({'id': shift.id, 'user_id': shift.user_id, 'start': shift.start, 'end': shift.end})
             shiftIndex += 1
             if len(shifts) <= shiftIndex:
@@ -36,6 +37,7 @@ def weekShiftList(shifts, week):
         
         weekShifts[i] = dayShifts
         dayShifts = []
+        day = day + timedelta(1)
 
     return weekShifts
 

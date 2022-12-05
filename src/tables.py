@@ -3,6 +3,7 @@ from src.models import User
 from src.models import Shift
 from sqlalchemy import asc
 from datetime import datetime, timedelta, date
+import src.shiftHelper as shiftHelper
 
 
 def createTables():
@@ -102,7 +103,10 @@ def getTodayShift(userid):
 
 def getWeekShifts(day):
     with app.app_context():
-        shifts = Shift.query.filter(Shift.start>=day).order_by(asc(Shift.start)).all()
+        
+        sunday = shiftHelper.convertToDateTime(day)
+
+        shifts = Shift.query.filter(Shift.start>=sunday).order_by(asc(Shift.start)).all()
         return shifts
 
 def clockIn(shift_id):
