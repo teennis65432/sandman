@@ -11,7 +11,7 @@
     <button onclick="location.href = '/clock-in';" id="home">Clock In</button>
     <button onclick="location.href = '/clock-out';" id="home">Clock Out</button>
     <button onclick="location.href = '/request-time';" id="reqtimeoff">Request Time off</button>
-    <button id="checkhours">Check hours</button>
+    <button onclick="location.href = '/check-hours';">Check hours</button>
     <button onclick="location.href = '/all-employees';" id="manager"> Employer Tools </button>
     <button onclick="location.href = '/logout';" id="signout">Sign Out</button>
     <p id="user">
@@ -62,6 +62,8 @@
             <tr>
               {% for day in week %}
                 {% if shifts[day] == '' %}
+                  <td> {{day}} </td>
+                {% elif day == '' %}
                   <td> {{day}} </td>
                 {% else %}
                   <td style="color:red; font-weight: bold;" class="hovertext" data-hover={{ shifts[day] }}> {{day}} </td>

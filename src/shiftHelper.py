@@ -20,11 +20,12 @@ def convertToDateTime(string):
             return None
 
 def weekShiftList(shifts, week):
-    print(shifts)
     weekShifts = [[]] * 7
     dayShifts = []
     shiftIndex = 0
     for i in range(len(week)):
+        if len(shifts) <= shiftIndex:
+            break
         shift = shifts[shiftIndex]
         while week[i] == shift.start.day:
             dayShifts.append({'id': shift.id, 'user_id': shift.user_id, 'start': shift.start, 'end': shift.end})
@@ -54,17 +55,25 @@ def canUserClockOut(shift):
     
     return True
 
+def removeShiftsNotInMonth(shifts):
+    allShifts = []
+    month = datetime.now().month
+
+    for shift in shifts:
+        if shift.start.month == month:
+            allShifts.append(shift)
+        else:
+            break
+
+    return allShifts
+
 
 def organizeShifts(shifts, year, month):
-    print(shifts)
-
     monthShifts = [''] * (calendar.monthrange(year, month)[1] + 1)
 
     for shift in shifts:
-        print(shift)
         if shift.start.month == month and shift.start.year == year:
             shiftText = shift.start.strftime("%H:%M") + "-" + shift.end.strftime("%H:%M")
-            print(shift.start.day)
             monthShifts[shift.start.day] = shiftText
         elif shift.start.month > month or shift.start.year > year:
             break

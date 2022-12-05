@@ -3,6 +3,11 @@ input[type=submit] {
   border-radius: 25px;
 }
 
+#shiftButton {
+  border-radius: 25px;
+  padding: 5px;
+}
+
 #back {
   position: absolute;
   margin: auto;
@@ -70,7 +75,7 @@ select {
 }
 
 #shifts td{
-  padding: 10px 10px;
+  padding: 10px 5px;
   width: 50px;
   height: 50px;
   border: none;
