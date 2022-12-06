@@ -98,7 +98,7 @@ def getTodayShift(userid):
     with app.app_context():
         todays_datetime = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
 
-        shift = Shift.query.filter_by(user_id=userid).filter(Shift.start>=todays_datetime).first()
+        shift = Shift.query.filter_by(user_id=userid).filter(Shift.start>=todays_datetime).order_by(asc(Shift.start)).first()
         return shift
 
 def getWeekShifts(day):
