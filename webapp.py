@@ -100,7 +100,8 @@ def request_time():
 def checkHours():
     shifts = shiftHelper.removeShiftsNotInMonth(tables.getUserShifts(current_user.id))
     month = calendarHelper.getMonthAndYear()
-    return render_template("check-hours.html", shifts=shifts, month=month)
+    hours = shiftHelper.getTotalHours(shifts)
+    return render_template("check-hours.html", shifts=shifts, month=month, hours=hours)
 
 @app.route('/add-employee', methods=['GET', 'POST'])
 @login_required
@@ -191,6 +192,8 @@ def clockOut():
     if shift is None:
         return redirect(url_for('homeError', errorcode=414))
     
+    print(shift)
+
     if shiftHelper.canUserClockOut(shift):
         tables.clockOut(shift.id)
     else:

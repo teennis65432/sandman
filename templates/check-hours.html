@@ -44,8 +44,14 @@
           <td> {{shift.end}} </td>
           <td> {{shift.clockin}} </td>
           <td> {{shift.clockout}} </td>
-         </tr>
+      </tr>
     {% endfor %}
+    <tr>
+      <td> Total Scheduled: </td>
+      <td> {{ hours.scheduled }} </td>
+      <td> Total Hours: </td>
+      <td> {{ hours.hours }} </td>
+    </tr>
   </tbody>
 </table>
 </body> 

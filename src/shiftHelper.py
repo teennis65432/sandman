@@ -6,7 +6,10 @@ from datetime import timedelta
 def isValid(start, end):
     if start > end:
         return 'Start time happens after end time'
-    
+
+    if start.day != end.day or start.month != end.month or start.year != end.year:
+        return 'Shift goes over multiple days'
+
     return 'All Good!'
 
 
@@ -42,17 +45,21 @@ def weekShiftList(shifts, week):
     return weekShifts
 
 def validClockIn(shift):
+    if shift.clockin != None:
+        return False
+
     day = datetime.now() + timedelta(minutes=15)
+    
     if (shift.start <= day and shift.end > day):
         return True
     else:
         return False
 
 def canUserClockOut(shift):
-    if shift.start is None:
+    if shift.clockin is None:
         return False
     
-    if shift.end is not None:
+    if shift.clockout is not None:
         return False
     
     return True
@@ -68,6 +75,21 @@ def removeShiftsNotInMonth(shifts):
             break
 
     return allShifts
+
+def getTotalHours(shifts):
+    totalScheduled = 0
+    totalHours = 0
+
+    for shift in shifts:
+        totalScheduled += (shift.end - shift.start).total_seconds() / 3600.0
+        if shift.clockin is not None:
+            if shift.clockout is None:
+                totalHours += (shift.end - shift.clockin).total_seconds() / 3600.0
+            else:
+                totalHours += (shift.clockout - shift.clockin).total_seconds() / 3600.0
+
+
+    return {'scheduled': round(totalScheduled, 2), 'hours': round(totalHours, 2)}
 
 
 def organizeShifts(shifts, year, month):
